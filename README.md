@@ -10,3 +10,7 @@ Download this [repo](https://github.com/chocolateimage/serenity-port-sonicmania/
 Run `./package.sh` while in the Sonic Mania port folder.
 
 Buy the game from [Steam](https://store.steampowered.com/app/584400/Sonic_Mania/) (if you haven't already) then copy "Data.rsdk" over to "serenity/Build/x86_64/Root/home/anon/.config/sonicmania/" 
+
+> [!WARNING]
+> You may need to switch to the master branch of SerenityOS and do `git pull` to get the latest fixes  
+> If you have already installed the SDL2 port you may need to reinstall SDL2
