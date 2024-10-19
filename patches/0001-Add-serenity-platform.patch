@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chocolateimage <chocolateimage@protonmail.com>
+Date: Sat, 19 Oct 2024 13:53:43 +0200
+Subject: [PATCH] Add serenity platform
+
+---
+ dependencies/RSDKv5/RSDKv5/RSDK/Core/RetroEngine.hpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dependencies/RSDKv5/RSDKv5/RSDK/Core/RetroEngine.hpp b/dependencies/RSDKv5/RSDKv5/RSDK/Core/RetroEngine.hpp
+index cc0f39f7de2634e25d993bf93f72e95a5dd8292b..853db77b886c2ce29d6c2ec436a3ff666f36518b 100644
+--- a/dependencies/RSDKv5/RSDKv5/RSDK/Core/RetroEngine.hpp
++++ b/dependencies/RSDKv5/RSDKv5/RSDK/Core/RetroEngine.hpp
+@@ -139,7 +139,7 @@ enum GameRegions {
+ #elif defined __SWITCH__
+ #define RETRO_PLATFORM   (RETRO_SWITCH)
+ #define RETRO_DEVICETYPE (RETRO_STANDARD)
+-#elif defined __linux__
++#elif defined __linux__ || defined __serenity__
+ #define RETRO_PLATFORM   (RETRO_LINUX)
+ #define RETRO_DEVICETYPE (RETRO_STANDARD)
+ #else

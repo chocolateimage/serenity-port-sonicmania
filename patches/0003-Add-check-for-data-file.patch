@@ -1,0 +1,48 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chocolateimage <chocolateimage@protonmail.com>
+Date: Sat, 19 Oct 2024 14:12:28 +0200
+Subject: [PATCH] Add check for data file
+
+---
+ dependencies/RSDKv5/RSDKv5/main.cpp | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/dependencies/RSDKv5/RSDKv5/main.cpp b/dependencies/RSDKv5/RSDKv5/main.cpp
+index 6557110b07a64a8641ecac7697e4915b67bbcd67..9ff6f317c2ca69f17127604a70975704f86c6ee2 100644
+--- a/dependencies/RSDKv5/RSDKv5/main.cpp
++++ b/dependencies/RSDKv5/RSDKv5/main.cpp
+@@ -1,4 +1,6 @@
+ #include "RSDK/Core/RetroEngine.hpp"
++#include <sys/stat.h>
++#include <unistd.h>
+ #include "main.hpp"
+ 
+ #if RETRO_STANDALONE
+@@ -80,6 +82,20 @@ int32 main(int32 argc, char *argv[]) { return RSDK_main(argc, argv, (void *)Link
+ 
+ int32 RSDK_main(int32 argc, char **argv, void *linkLogicPtr)
+ {
++    std::string path = std::string(getenv("HOME")) + "/.config/sonicmania";
++    mkdir(path.c_str(), 0777);
++    chdir(path.c_str());
++
++    // Game will crash if the data file does not exist, so a check is needed
++    std::string dataPath = path + "/Data.rsdk";
++
++    if (access(dataPath.c_str(), F_OK) != 0) {
++        char const *message = "Data.rsdk does not exist in ~/.config/sonicmania\nGame cannot launch without it";
++        printf("%s\n", message);
++        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Missing file", message, NULL);
++        return 1;
++    }
++
+     RSDK::linkGameLogic = (RSDK::LogicLinkHandle)linkLogicPtr;
+ 
+     RSDK::InitCoreAPI();
+@@ -89,4 +105,4 @@ int32 RSDK_main(int32 argc, char **argv, void *linkLogicPtr)
+     RSDK::ReleaseCoreAPI();
+ 
+     return exitCode;
+-}
+\ No newline at end of file
++}
